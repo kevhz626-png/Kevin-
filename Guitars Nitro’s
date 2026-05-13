@@ -1,0 +1,345 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Takamine Store</title>
+
+<style>
+
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+    font-family:Arial, sans-serif;
+}
+
+body{
+    background:#111;
+    color:white;
+}
+
+header{
+    background:#000;
+    padding:20px;
+    text-align:center;
+    border-bottom:3px solid #ff9800;
+}
+
+header h1{
+    color:#ff9800;
+    font-size:40px;
+}
+
+.hero{
+    background:url('https://images.unsplash.com/photo-1510915361894-db8b60106cb1?q=80&w=1600&auto=format&fit=crop') center/cover;
+    height:60vh;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    text-align:center;
+}
+
+.hero div{
+    background:rgba(0,0,0,0.6);
+    padding:30px;
+    border-radius:15px;
+}
+
+.hero h2{
+    color:#ff9800;
+    font-size:45px;
+    margin-bottom:10px;
+}
+
+.container{
+    padding:50px 8%;
+}
+
+.section-title{
+    text-align:center;
+    margin-bottom:40px;
+    color:#ff9800;
+    font-size:35px;
+}
+
+.products{
+    display:grid;
+    grid-template-columns:repeat(auto-fit,minmax(250px,1fr));
+    gap:30px;
+}
+
+.card{
+    background:#1c1c1c;
+    border-radius:15px;
+    overflow:hidden;
+    transition:0.3s;
+    border:1px solid #333;
+}
+
+.card:hover{
+    transform:translateY(-8px);
+    box-shadow:0 0 20px rgba(255,152,0,0.5);
+}
+
+.card img{
+    width:100%;
+    height:260px;
+    object-fit:cover;
+}
+
+.card-content{
+    padding:20px;
+}
+
+.card-content h3{
+    color:#ff9800;
+    margin-bottom:10px;
+}
+
+.price{
+    font-size:22px;
+    margin:10px 0;
+}
+
+button{
+    width:100%;
+    padding:12px;
+    border:none;
+    background:#ff9800;
+    font-weight:bold;
+    border-radius:10px;
+    cursor:pointer;
+    transition:0.3s;
+}
+
+button:hover{
+    background:white;
+}
+
+.modal{
+    display:none;
+    position:fixed;
+    z-index:999;
+    left:0;
+    top:0;
+    width:100%;
+    height:100%;
+    overflow:auto;
+    background:rgba(0,0,0,0.9);
+    padding:30px;
+}
+
+.modal-content{
+    background:#1b1b1b;
+    margin:auto;
+    max-width:900px;
+    border-radius:20px;
+    padding:30px;
+    animation:show 0.4s;
+}
+
+@keyframes show{
+    from{
+        transform:scale(0.8);
+        opacity:0;
+    }
+    to{
+        transform:scale(1);
+        opacity:1;
+    }
+}
+
+.close{
+    float:right;
+    font-size:35px;
+    cursor:pointer;
+    color:white;
+}
+
+.gallery{
+    display:grid;
+    grid-template-columns:repeat(auto-fit,minmax(200px,1fr));
+    gap:15px;
+    margin-top:20px;
+}
+
+.gallery img{
+    width:100%;
+    border-radius:15px;
+    height:220px;
+    object-fit:cover;
+}
+
+.modal h2{
+    color:#ff9800;
+    margin-bottom:15px;
+}
+
+.modal p{
+    line-height:1.7;
+    margin-top:10px;
+}
+
+footer{
+    text-align:center;
+    padding:20px;
+    background:#000;
+    margin-top:40px;
+    border-top:2px solid #ff9800;
+}
+
+</style>
+</head>
+
+<body>
+
+<header>
+    <h1>🎸 Takamine Store</h1>
+</header>
+
+<section class="hero">
+    <div>
+        <h2>Sonido elegante</h2>
+        <p>Explora guitarras Takamine legendarias.</p>
+    </div>
+</section>
+
+<section class="container">
+
+<h2 class="section-title">Modelos Destacados</h2>
+
+<div class="products">
+
+<div class="card">
+    <img src="https://images.unsplash.com/photo-1516280440614-37939bbacd81?q=80&w=1200&auto=format&fit=crop">
+
+    <div class="card-content">
+        <h3>Takamine GD30</h3>
+        <div class="price">$17,000 MXN</div>
+        <button onclick="openModal('gd30')">Ver más</button>
+    </div>
+</div>
+
+<div class="card">
+    <img src="https://images.unsplash.com/photo-1525201548942-d8732f6617a0?q=80&w=1200&auto=format&fit=crop">
+
+    <div class="card-content">
+        <h3>Takamine JJ</h3>
+        <div class="price">$47,000 MXN</div>
+        <button onclick="openModal('jj')">Ver más</button>
+    </div>
+</div>
+
+<div class="card">
+    <img src="https://images.unsplash.com/photo-1511379938547-c1f69419868d?q=80&w=1200&auto=format&fit=crop">
+
+    <div class="card-content">
+        <h3>Takamine Legacy</h3>
+        <div class="price">$40,000 MXN</div>
+        <button onclick="openModal('legacy')">Ver más</button>
+    </div>
+</div>
+
+</div>
+</section>
+
+<!-- MODAL -->
+
+<div id="modal" class="modal">
+
+<div class="modal-content">
+
+<span class="close" onclick="closeModal()">&times;</span>
+
+<h2 id="modalTitle"></h2>
+
+<p id="modalText"></p>
+
+<div class="gallery" id="gallery"></div>
+
+</div>
+</div>
+
+<footer>
+🎶 Takamine Store 2026
+</footer>
+
+<script>
+
+const data = {
+
+gd30:{
+title:"Takamine GD30",
+text:"La Takamine GD30 ofrece un sonido cálido y equilibrado. Perfecta para músicos acústicos que buscan elegancia y potencia.",
+images:[
+"https://images.unsplash.com/photo-1516280440614-37939bbacd81?q=80&w=1200&auto=format&fit=crop",
+"https://images.unsplash.com/photo-1520166012956-add9ba0835cb?q=80&w=1200&auto=format&fit=crop",
+"https://images.unsplash.com/photo-1511192336575-5a79af67a629?q=80&w=1200&auto=format&fit=crop"
+]
+},
+
+jj:{
+title:"Takamine JJ",
+text:"La Takamine JJ destaca por su diseño premium y sonido profundo. Un modelo con presencia escénica impresionante.",
+images:[
+"https://images.unsplash.com/photo-1525201548942-d8732f6617a0?q=80&w=1200&auto=format&fit=crop",
+"https://images.unsplash.com/photo-1507838153414-b4b713384a76?q=80&w=1200&auto=format&fit=crop",
+"https://images.unsplash.com/photo-1519892300165-cb5542fb47c7?q=80&w=1200&auto=format&fit=crop"
+]
+},
+
+legacy:{
+title:"Takamine Legacy",
+text:"La Takamine Legacy combina tradición y modernidad. Ideal para escenarios, grabaciones y sesiones acústicas.",
+images:[
+"https://images.unsplash.com/photo-1511379938547-c1f69419868d?q=80&w=1200&auto=format&fit=crop",
+"https://images.unsplash.com/photo-1507838153414-b4b713384a76?q=80&w=1200&auto=format&fit=crop",
+"https://images.unsplash.com/photo-1493225457124-a3eb161ffa5f?q=80&w=1200&auto=format&fit=crop"
+]
+}
+
+};
+
+function openModal(guitar){
+
+document.getElementById("modal").style.display="block";
+
+document.getElementById("modalTitle").innerText=data[guitar].title;
+
+document.getElementById("modalText").innerText=data[guitar].text;
+
+let gallery=document.getElementById("gallery");
+
+gallery.innerHTML="";
+
+data[guitar].images.forEach(img =>{
+
+gallery.innerHTML += `<img src="${img}">`;
+
+});
+
+}
+
+function closeModal(){
+
+document.getElementById("modal").style.display="none";
+
+}
+
+window.onclick=function(event){
+
+let modal=document.getElementById("modal");
+
+if(event.target==modal){
+
+modal.style.display="none";
+
+}
+
+}
+
+</script>
+
+</body>
+</html>
